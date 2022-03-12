@@ -1,0 +1,9 @@
+.card__label {
+  position: absolute;
+  right: 20px;
+  bottom: 30px;
+}
+
+.card__label:checked + .card__button {
+  background-image: url(../../../images/like-button-black.svg);
+}

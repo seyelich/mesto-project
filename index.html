@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="pages/index.css">
+      <title>Место</title>
+  </head>
+  <body class="page">
+    <header class="header">
+      <img src="images/header__logo.svg" alt="Логотип" class="header__logo">
+    </header>
+
+    <main class="content">
+      <section class="profile">
+        <img src="images/image.jpg" alt="Фото профиля" class="profile__img">
+        <div class="profile__info">
+          <h1 class="profile__name">Жак-Ив Кусто<button class="profile__button-edit"></button></h1>
+          <h2 class="profile__description">Исследователь океана</h2>
+        </div>
+        <button class="profile__button-add"></button>
+      </section>
+
+      <section class="popup">
+        <div class="popup__container">
+          <img src="images/close-icon.svg" class="popup__button-close">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <fieldset class="input-container">
+            <input type="text" class="popup__input" placeholder="Имя">
+            <input type="text" class="popup__input" placeholder="О себе">
+          </fieldset>
+          <button class="popup__button-save">Сохранить</button>
+        </div>
+      </section>
+
+      <section>
+        <ul class="cards">
+          <li class="card">
+            <img src="images/karachaevsk.png" alt="Карачаевск" class="card__img">
+            <p class="card__title">Карачаевск</p>
+            <fieldset class="input-container">
+              <label class="card__label">
+                <input type="checkbox" class="input">
+                <span class="card__button"></span>
+              </label>
+            </fieldset>
+          </li>
+
+          <li class="card">
+            <img src="images/elbrus.png" alt="Гора Эльбрус" class="card__img">
+            <p class="card__title">Гора Эльбрус</p>
+            <fieldset class="input-container">
+              <label class="card__label">
+                <input type="checkbox" class="input">
+                <span class="card__button"></span>
+              </label>
+            </fieldset>
+          </li>
+
+          <li class="card">
+            <img src="images/dombai.png" alt="Домбай" class="card__img">
+            <p class="card__title">Домбай</p>
+            <fieldset class="input-container">
+              <label class="card__label">
+                <input type="checkbox" class="input">
+                <span class="card__button"></span>
+              </label>
+            </fieldset>
+          </li>
+
+          <li class="card">
+            <img src="images/putorana.jpg" alt="Плато Путорана" class="card__img">
+            <p class="card__title">Плато Путорана</p>
+            <fieldset class="input-container">
+              <label class="card__label">
+                <input type="checkbox" class="input">
+                <span class="card__button"></span>
+              </label>
+            </fieldset>
+          </li>
+
+          <li class="card">
+            <div><img src="images/stolbi.jpg" alt="Якутия" class="card__img"></div>
+            <p class="card__title">Якутия</p>
+            <fieldset class="input-container">
+              <label class="card__label">
+                <input type="checkbox" class="input">
+                <span class="card__button"></span>
+              </label>
+            </fieldset>
+          </li>
+
+          <li class="card">
+            <img src="images/chukotka.jpg" alt="Чукотка" class="card__img">
+            <p class="card__title">Чукотка</p>
+            <fieldset class="input-container">
+              <label class="card__label">
+                <input type="checkbox" class="input">
+                <span class="card__button"></span>
+              </label>
+            </fieldset>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+    </footer>
+  </body>
+</html>
