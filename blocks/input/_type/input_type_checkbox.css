@@ -1,0 +1,3 @@
+.input[type="checkbox"]:checked + .card__button {
+  background-image: url(../../images/like-button-black.svg);
+}

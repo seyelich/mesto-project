@@ -16,21 +16,24 @@
       <section class="profile">
         <img src="images/image.jpg" alt="Фото профиля" class="profile__img">
         <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто<button class="profile__button-edit"></button></h1>
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <button type="button" class="profile__button profile__button_type_edit button"></button>
           <h2 class="profile__description">Исследователь океана</h2>
         </div>
-        <button class="profile__button-add"></button>
+        <button type="button" class="profile__button profile__button_type_add button"></button>
       </section>
 
       <section class="popup">
         <div class="popup__container">
-          <img src="images/close-icon.svg" class="popup__button-close">
+          <img src="images/close-icon.svg" class="popup__button-close button">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <fieldset class="input-container">
-            <input type="text" class="popup__input" placeholder="Имя">
-            <input type="text" class="popup__input" placeholder="О себе">
-          </fieldset>
-          <button class="popup__button-save">Сохранить</button>
+          <form name="">
+            <fieldset class="input-container">
+              <input type="text" class="popup__input" placeholder="Имя">
+              <input type="text" class="popup__input" placeholder="О себе">
+            </fieldset>
+          </form>
+          <button type="submit" class="popup__button-save">Сохранить</button>
         </div>
       </section>
 
@@ -38,68 +41,50 @@
         <ul class="cards">
           <li class="card">
             <img src="images/karachaevsk.png" alt="Карачаевск" class="card__img">
-            <p class="card__title">Карачаевск</p>
-            <fieldset class="input-container">
-              <label class="card__label">
-                <input type="checkbox" class="input">
-                <span class="card__button"></span>
-              </label>
-            </fieldset>
+            <div class="card__text-container">
+              <h3 class="card__title">Карачаевск</h3>
+              <button type="button" class="card__button"></button>
+            </div>
           </li>
 
           <li class="card">
-            <img src="images/elbrus.png" alt="Гора Эльбрус" class="card__img">
-            <p class="card__title">Гора Эльбрус</p>
-            <fieldset class="input-container">
-              <label class="card__label">
-                <input type="checkbox" class="input">
-                <span class="card__button"></span>
-              </label>
-            </fieldset>
+            <img src="images/elbrus.png" alt="Эльбрус" class="card__img">
+            <div class="card__text-container">
+              <h3 class="card__title">Эльбрус</h3>
+              <button type="button" class="card__button"></button>
+            </div>
           </li>
 
           <li class="card">
-            <img src="images/dombai.png" alt="Домбай" class="card__img">
-            <p class="card__title">Домбай</p>
-            <fieldset class="input-container">
-              <label class="card__label">
-                <input type="checkbox" class="input">
-                <span class="card__button"></span>
-              </label>
-            </fieldset>
+            <img src="images/stolbi.jpg" alt="Якутия" class="card__img">
+            <div class="card__text-container">
+              <h3 class="card__title">Якутия</h3>
+              <button type="button" class="card__button"></button>
+            </div>
           </li>
 
           <li class="card">
             <img src="images/putorana.jpg" alt="Плато Путорана" class="card__img">
-            <p class="card__title">Плато Путорана</p>
-            <fieldset class="input-container">
-              <label class="card__label">
-                <input type="checkbox" class="input">
-                <span class="card__button"></span>
-              </label>
-            </fieldset>
+            <div class="card__text-container">
+              <h3 class="card__title">Плато Путорана</h3>
+              <button type="button" class="card__button"></button>
+            </div>
           </li>
 
           <li class="card">
-            <div><img src="images/stolbi.jpg" alt="Якутия" class="card__img"></div>
-            <p class="card__title">Якутия</p>
-            <fieldset class="input-container">
-              <label class="card__label">
-                <input type="checkbox" class="input">
-                <span class="card__button"></span>
-              </label>
-            </fieldset>
+            <img src="images/dombai.png" alt="Домбай" class="card__img">
+            <div class="card__text-container">
+              <h3 class="card__title">Домбай</h3>
+              <button type="button" class="card__button"></button>
+            </div>
           </li>
 
           <li class="card">
             <img src="images/chukotka.jpg" alt="Чукотка" class="card__img">
-            <p class="card__title">Чукотка</p>
-            <fieldset class="input-container">
-              <label class="card__label">
-                <input type="checkbox" class="input">
-                <span class="card__button"></span>
-              </label>
-            </fieldset>
+            <div class="card__text-container">
+              <h3 class="card__title">Чукотка</h3>
+              <button type="button" class="card__button"></button>
+            </div>
           </li>
         </ul>
       </section>

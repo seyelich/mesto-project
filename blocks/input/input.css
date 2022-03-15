@@ -1,11 +1,7 @@
-.input[type="checkbox"] {
+.input {
   position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
   clip: rect(0 0 0 0);
-}
-
-.input[type="checkbox"]:checked + .card__button {
-  background-image: url(../../images/like-button-black.svg);
 }
