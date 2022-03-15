@@ -25,15 +25,15 @@
 
       <section class="popup">
         <div class="popup__container">
-          <img src="images/close-icon.svg" class="popup__button-close button">
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <form name="">
+          <img src="images/close-icon.svg" alt="Кнопка Закрыть" class="popup__button-close button">
+          <form class="popup__form" name="info">
+            <h2 class="popup__title">Редактировать профиль</h2>
             <fieldset class="input-container">
-              <input type="text" class="popup__input" placeholder="Имя">
-              <input type="text" class="popup__input" placeholder="О себе">
+              <input name="name" type="text" class="popup__input" placeholder="Имя">
+              <input name="about" type="text" class="popup__input" placeholder="О себе">
             </fieldset>
+            <button type="submit" class="popup__button-save">Сохранить</button>
           </form>
-          <button type="submit" class="popup__button-save">Сохранить</button>
         </div>
       </section>
 
