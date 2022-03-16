@@ -4,6 +4,12 @@
   position: absolute;
   top: -40px;
   right: -40px;
+  background-image: url(../../../images/close-icon.svg);
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 @media screen and (max-width: 600px) {

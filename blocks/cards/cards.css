@@ -10,7 +10,7 @@
   row-gap: 20px;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 600px) {
   .cards {
     margin: 36px auto 48px auto;
     column-gap: 0;

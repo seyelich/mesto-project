@@ -6,17 +6,10 @@
   margin-left: 30px;
 }
 
-@media screen and (max-width: 670px) {
-  .profile__info {
-    margin-top: 26px;
-    margin-bottom: 33px;
-    margin-left: 0;
-  }
-}
-
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 600px) {
   .profile__info {
     width: 100%;
     column-gap: 10px;
+    margin: 26px 0 33px 0;
   }
 }

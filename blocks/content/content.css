@@ -4,9 +4,20 @@
   margin-top: 40px;
 }
 
+@media screen and (max-width: 900px) {
+  .content {
+    max-width: 581px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .content {
+    max-width: 282px;
+  }
+}
+
 @media screen and (max-width: 425px) {
   .content {
     margin-top: 42px;
-    max-width: 282px;
   }
 }
