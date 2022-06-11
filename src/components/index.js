@@ -1,36 +1,27 @@
 import '../pages/index.css';
-import { handleCardFormSubmit, handleProfileFormSubmit, popupAdd, popupEdit, formAdd, formEdit, writeInfoInInput } from './modal';
-import { initialCards, addCard } from './card';
-import { obj, enableValidation } from './validate';
+import { initialCards, popups, popupAdd, popupEdit, editButton, addButton, formAdd, formEdit, obj } from './constants';
+import { handleCardFormSubmit, handleProfileFormSubmit, writeInfoInInput } from './modal';
+import { addCard } from './card';
+import { enableValidation } from './validate';
 import { closePopup, openPopup } from './utils';
 
-document.addEventListener('click', (evt) => {
-  if(evt.target.classList.contains('profile__button_type_add')) {
-    openPopup(popupAdd);
-  }
+addButton.addEventListener('click', () => { openPopup(popupAdd) });
+
+popups.forEach((popup) => { 
+  popup.addEventListener('mousedown', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) { 
+        closePopup(popup);
+      };
+
+      if (evt.target.classList.contains('popup__button-close')) { 
+        closePopup(popup);
+      }
+  });
 });
 
-document.addEventListener('click', (evt) => {
-  if(evt.target.classList.contains('popup__button-close')) {
-    const popup = evt.target.closest('.popup');
-    closePopup(popup);
-  }
-});
-
-document.addEventListener('mousedown', (evt) => {
-  const popup = evt.target.closest('.popup');
-  const popupContainer = evt.target.closest('.popup__container');
-  const popupPhotoContainer = evt.target.closest('.popup-photo__container');
-  if (popup && !popupContainer && !popupPhotoContainer) {
-    closePopup(popup);
-  }
-})
-
-document.addEventListener('click', (evt) => {
-  if(evt.target.classList.contains('profile__button_type_edit')) {
-    openPopup(popupEdit);
-    writeInfoInInput();
-  }
+editButton.addEventListener('click', () => {
+  openPopup(popupEdit);
+  writeInfoInInput();
 });
 
 formEdit.addEventListener('submit', handleProfileFormSubmit);

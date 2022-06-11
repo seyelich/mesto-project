@@ -1,24 +1,13 @@
-export const obj = {
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  fieldsetSelector: '.form__input-container',
-  submitButtonSelector: '.form__button-save',
-  inactiveButtonClass: 'form__button-save_disabled',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'form__input-error_active'
-}
+import { obj } from "./constants";
 
-const showInputError = (formElement, inputElement, errorMessage, obj) => {
+function showInputError(formElement, inputElement, errorMessage, obj) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(obj.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(obj.errorClass);
-  if(errorElement.clientHeight / 15 >= 3) {
-    errorElement.classList.add('form__input-error_size_l')
-  }
 };
 
-export const hideInputError = (formElement, inputElement, obj) => {
+export function hideInputError(formElement, inputElement, obj) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(obj.inputErrorClass);
   errorElement.classList.remove(obj.errorClass);
@@ -31,16 +20,18 @@ function hasInvalidInput(inputList) {
   })
 }
 
-const toggleButtonState = (inputList, buttonEl, obj) => {
+export function toggleButtonState(inputList, buttonEl, obj) {
   if (hasInvalidInput(inputList)) {
     buttonEl.classList.add(obj.inactiveButtonClass);
+    buttonEl.setAttribute('disabled', true);
   } 
   else {
     buttonEl.classList.remove(obj.inactiveButtonClass);
+    buttonEl.removeAttribute('disabled');
   }
 }
 
-const checkInputValidity = (formElement, inputElement) => {
+function checkInputValidity(formElement, inputElement) {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, obj);
   } else {
@@ -48,7 +39,7 @@ const checkInputValidity = (formElement, inputElement) => {
   }
 };
 
-const setEventListeners = (formElement, obj) => {
+function setEventListeners(formElement, obj) {
   const inputList = Array.from(formElement.querySelectorAll(obj.inputSelector));
   const buttonEl = formElement.querySelector(obj.submitButtonSelector);
   toggleButtonState(inputList, buttonEl, obj);
@@ -56,15 +47,6 @@ const setEventListeners = (formElement, obj) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement);
       toggleButtonState(inputList, buttonEl, obj);
-    });
-
-    inputElement.addEventListener('keydown', function (evt) {
-      if(evt.key === 'Enter') {
-        checkInputValidity(formElement, inputElement);
-        if(hasInvalidInput(inputList)) {
-          evt.preventDefault();
-        }
-      };
     });
   });
 };

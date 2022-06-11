@@ -1,36 +1,9 @@
 import { openPopup } from "./utils";
+import { popupPhoto, cardsContainer, popupPhotoImg, popupPhotoTitle } from "./constants";
 
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-export const popupPhoto = document.querySelector('.popup-photo');
-const cardsContainer = document.querySelector('.cards');
-const popupPhotoImg = popupPhoto.querySelector('.popup-photo__img');
-const popupPhotoTitle = popupPhoto.querySelector('.popup-photo__title');
+function toggleLikeButton(evt) {
+  evt.target.classList.toggle('card__like-button_active');
+}
 
 export function createCard(cardNameValue, cardLinkValue) {
   const cardTemplate = document.querySelector('#card-template').content;
@@ -44,18 +17,15 @@ export function createCard(cardNameValue, cardLinkValue) {
   cardTitle.textContent = cardNameValue;
   
   cardDeleteButton.addEventListener('click', () => { cardEl.remove() });
-
-  cardLikeButton.addEventListener('click', (evt) => {
-    evt.target.classList.toggle('card__like-button_active');
-  });
-
-  cardImg.addEventListener('click', () => {
+  cardLikeButton.addEventListener('click', toggleLikeButton);
+  function setPopupPhoto() {
     openPopup(popupPhoto);
     popupPhotoImg.src = cardLinkValue;
     popupPhotoImg.alt = cardNameValue;
     popupPhotoTitle.textContent = cardNameValue;
-  });
-
+  }
+  cardImg.addEventListener('click', setPopupPhoto);
+  
   return cardEl;
 }
 

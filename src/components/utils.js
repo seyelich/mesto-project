@@ -1,8 +1,7 @@
 function keyHandler(evt) {
   if(evt.key === 'Escape') {
-    Array.from(document.querySelectorAll('.popup')).forEach(popup => {
-      closePopup(popup);
-    })
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
 }
 
