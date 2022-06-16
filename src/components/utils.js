@@ -14,3 +14,10 @@ export function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', keyHandler);
 }
+
+export function checkResult(res) {
+  if(res.ok) { 
+    return res.json();
+  }
+  return Promise.reject(`Что-то пошло не так: ${res.status}`);
+}

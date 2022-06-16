@@ -13,11 +13,14 @@
 
     <main class="content">
       <section class="profile">
-        <img src="<%=require('./images/image.jpg')%>" alt="Фото профиля" class="profile__img">
+        <div class="profile__img-container">
+          <img src="" alt="Фото профиля" class="profile__img">
+          <div class="profile__img-overlay profile__img"></div>
+        </div>
         <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name"></h1>
           <button type="button" aria-label="Изменить" class="profile__button profile__button_type_edit button"></button>
-          <h2 class="profile__description">Исследователь океана</h2>
+          <h2 class="profile__description"></h2>
         </div>
         <button type="button" aria-label="Добавить" class="profile__button profile__button_type_add button"></button>
       </section>
@@ -25,11 +28,14 @@
       <section>
         <ul class="cards">
           <template id="card-template">
-            <li class="card">
+            <li class="card" id="">
               <img src="" alt="" class="card__img">
               <div class="card__text-container">
                 <h3 class="card__title"></h3>
-                <button type="button" aria-label="Нравится" class="card__like-button"></button>
+                <div class="card__like-container">
+                  <button type="button" aria-label="Нравится" class="card__like-button"></button>
+                  <p class="card__like-counter"></p>
+                </div>
               </div>
               <button type="button" aria-label="Удалить" class="card__delete-button button"></button>
             </li>
@@ -82,6 +88,22 @@
       </div>
     </div>
 
+    <div class="popup popup-avatar">
+      <div class="popup__container">
+        <button type="button" aria-label="Закрыть" class="button popup__button-close"></button>
+        <form  name="avatar" class="form" novalidate>
+          <h2 class="form__title">Обновить аватар</h2>
+          <fieldset class="form__input-container">
+            <label class="form__field">
+              <input name="avatar" id="avatar" type="url" class="form__input" placeholder="Ссылка на фото" required>
+              <span class="form__input-error avatar-error"></span>
+            </label>
+            <button type="submit" class="form__button-save">Сохранить</button>
+        </fieldset>
+        </form>
+      </div>
+    </div>
+
     <div class="popup popup-photo">
       <div class="popup-photo__container">
         <button type="button" aria-label="Закрыть" class="button popup__button-close"></button>
@@ -89,5 +111,15 @@
         <h3 class="popup-photo__title"></h3>
       </div>
     </div>
+
+    <!--<div class="popup popup-check">
+      <div class="popup__container">
+        <button type="button" aria-label="Закрыть" class="button popup__button-close"></button>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <form  name="check" class="form" novalidate> make only button
+          <button type="button" class="form__button-save">Да</button>
+        </form>
+      </div>
+    </div>-->
   </body>
 </html>
