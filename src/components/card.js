@@ -1,6 +1,6 @@
-import { openPopup, checkResult } from "./utils";
+import { openPopup } from "./utils";
 import { popupPhoto, cardsContainer, popupPhotoImg, popupPhotoTitle } from "./constants";
-import { deleteCard, deleteLike, setLike } from "./api";
+import { deleteCard, deleteLike, setLike,checkResult } from "./api";
 
 export function createCard(cardNameValue, cardLinkValue, cardLikes, userId, cardId) {
   const cardTemplate = document.querySelector('#card-template').content;
@@ -34,29 +34,29 @@ export function createCard(cardNameValue, cardLinkValue, cardLikes, userId, card
     const card = evt.target.closest('.card');
     if(cardLikeButton.classList.contains('card__like-button_active')) {
       deleteLike(card.id)
-        .then(res => {
-          checkResult(res);
+        .then(res => checkResult(res))
+        .then((data) => {
+          cardLikeCounter.textContent = data.likes.length;
+          cardLikeButton.classList.remove('card__like-button_active');
         })
-        .then(data => cardLikeCounter.textContent = data.likes.length)
         .catch(err => 
           console.log(err)
       );
-      cardLikeButton.classList.remove('card__like-button_active')
     }
     else { 
       setLike(card.id)
-        .then(res => {
-          checkResult(res);
+        .then((res) => checkResult(res))
+        .then((data) => {
+          cardLikeCounter.textContent = data.likes.length;
+          cardLikeButton.classList.add('card__like-button_active');
         })
-        .then(data => cardLikeCounter.textContent = data.likes.length)
         .catch(err => 
           console.log(err)
       );
-      cardLikeButton.classList.add('card__like-button_active')
     }
   });
 
-  if (cardLikes.some((like) => like._id === userId)) {
+  if (cardLikes.some((like) => like._id === '345b79856fbd9fc381d12a7d')) {
     cardLikeButton.classList.add('card__like-button_active');
   }
 

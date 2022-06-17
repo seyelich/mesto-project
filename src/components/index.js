@@ -1,10 +1,10 @@
 import '../pages/index.css';
-import { cardName, cardLink, popups, popupAdd, popupEdit, editButton, addButton, formAdd, formEdit, obj, editAvaOverlay, popupAva, name, about, profilePic, formAva } from './constants';
-import { handleAvaFormSubmit, handleCardFormSubmit, handleProfileFormSubmit, writeInfoInInput } from './modal';
+import { popups, popupAdd, popupEdit, editButton, addButton, formAdd, formEdit, obj, editAvaOverlay, popupAva, name, about, profilePic, formAva, inputName, inputAbout, popupAddInputs, inputAva, formCheck, profileName, profileAbout } from './constants';
+import { writeInfoInInput } from './modal';
 import { addCard } from './card';
-import { enableValidation } from './validate';
-import { closePopup, openPopup, checkResult } from './utils';
-import { getProfileInfo, getCards, changeProfile, postNewCard, changeAva } from './api';
+import { enableValidation, toggleButtonState } from './validate';
+import { closePopup, openPopup } from './utils';
+import { getProfileInfo, getCards, changeProfile, postNewCard, changeAva, checkResult } from './api';
 
 addButton.addEventListener('click', () => { openPopup(popupAdd) });
 
@@ -30,7 +30,7 @@ editAvaOverlay.addEventListener('click', () => {
 })
 
 formEdit.addEventListener('submit', function(evt) {
-  handleProfileFormSubmit(evt);
+  evt.preventDefault();
   const btn = formEdit.querySelector('.form__button-save');
   btn.textContent = 'Сохранение...';
   const { name, about } = evt.currentTarget.elements;
@@ -38,7 +38,12 @@ formEdit.addEventListener('submit', function(evt) {
     name: name.value,
     about: about.value
   })
-    .then(res => checkResult(res))
+    .then(res => {
+      checkResult(res);
+      profileName.textContent = inputName.value;
+      profileAbout.textContent = inputAbout.value;
+      closePopup(popupEdit);
+    })
     .catch(err => console.log(err))
     .finally(res=> {
       btn.textContent = 'Сохранить'
@@ -46,7 +51,7 @@ formEdit.addEventListener('submit', function(evt) {
 });
 
 formAdd.addEventListener('submit', function(evt) {
-  handleCardFormSubmit(evt);
+  evt.preventDefault();
   const btn = formAdd.querySelector('.form__button-save');
   btn.textContent = 'Сохранение...';
   const { title, link } = evt.currentTarget.elements;
@@ -55,7 +60,11 @@ formAdd.addEventListener('submit', function(evt) {
     link: link.value
   })
     .then(res => checkResult(res))
-    .then(data => { addCard(data.name, data.link, data.likes, data.owner._id, data._id) })
+    .then(data => {
+      addCard(data.name, data.link, data.likes, data.owner._id, data._id);
+      closePopup(popupAdd);
+      toggleButtonState(popupAddInputs, btn, obj);
+    })
     .catch(err => console.log(err))
     .finally(res => {
       btn.textContent = 'Создать'
@@ -63,47 +72,48 @@ formAdd.addEventListener('submit', function(evt) {
   formAdd.reset();
 });
 
-// formCheck.addEventListener('submit', function(evt) {
-//   handleCheckFormSubmit(evt);
-// })
-
 enableValidation(obj);
 
-getProfileInfo()
-  .then(res => checkResult(res))
-  .then(data => renderProfile(data))
-  .catch(err => 
+Promise.all([getProfileInfo(), getCards()])
+  .then(([userData, cards]) => {
+    renderProfile(userData);
+    renderCards(cards);
+  })
+  .catch(err => {
     console.log(err)
-);
+});
 
 function renderProfile(data) {
-  name.textContent = data.name;
-  about.textContent = data.about;
+  profileName.textContent = data.name;
+  profileAbout.textContent = data.about;
   profilePic.src = data.avatar;
 }
 
-getCards()
-  .then(res => checkResult(res))
-  .then(data => renderCards(data))
-  .catch(err => 
-    console.log(err)
-);
-
 function renderCards(data) {
-  data.forEach((i) => {
+  data.reverse().forEach((i) => {
     addCard(i.name, i.link, i.likes, i.owner._id, i._id);
   });
 }
 
 formAva.addEventListener('submit', function(evt) {
-  handleAvaFormSubmit(evt);
+  evt.preventDefault();
   const btn = formAva.querySelector('.form__button-save');
   btn.textContent = 'Сохранение...';
   const { avatar } = evt.currentTarget.elements;
   changeAva({avatar: avatar.value})
-    .then(res => checkResult(res))
+    .then(res => {
+      checkResult(res);
+      profilePic.src = inputAva.value;
+      closePopup(popupAva);
+    })
     .catch(err => console.log(err))
     .finally(res => {
       btn.textContent = 'Сохранить'
   });
 })
+
+// formCheck.addEventListener('submit', function(evt) {
+//   evt.preventDefault();
+//   const btn = formAva.querySelector('.form__button-save');
+//   const card = evt.
+// })
