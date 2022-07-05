@@ -32,3 +32,4 @@ export const cardName = popupAdd.querySelector('#title');
 export const cardLink = popupAdd.querySelector('#link');
 export const profilePic = document.querySelector('.profile__img');
 export const inputAva = popupAva.querySelector('#avatar');
+export const formEditSaveBtn = formEdit.querySelector('.form__button-save');

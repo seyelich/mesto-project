@@ -1,5 +1,5 @@
 import '../pages/index.css';
-import { popups, popupAdd, popupEdit, editButton, addButton, formAdd, formEdit, obj, editAvaOverlay, popupAva, name, about, profilePic, formAva, inputName, inputAbout, popupAddInputs, inputAva, formCheck, profileName, profileAbout } from './constants';
+import { formEditSaveBtn, popups, popupAdd, popupEdit, editButton, addButton, formAdd, formEdit, obj, editAvaOverlay, popupAva, name, about, profilePic, formAva, inputName, inputAbout, popupAddInputs, inputAva, formCheck, profileName, profileAbout } from './constants';
 import { writeInfoInInput } from './modal';
 import { addCard } from './card';
 import { enableValidation, toggleButtonState } from './validate';
@@ -31,8 +31,7 @@ editAvaOverlay.addEventListener('click', () => {
 
 formEdit.addEventListener('submit', function(evt) {
   evt.preventDefault();
-  const btn = formEdit.querySelector('.form__button-save');
-  btn.textContent = 'Сохранение...';
+  formEditSaveBtn.textContent = 'Сохранение...';
   const { name, about } = evt.currentTarget.elements;
   changeProfile({
     name: name.value,
@@ -46,7 +45,7 @@ formEdit.addEventListener('submit', function(evt) {
     })
     .catch(err => console.log(err))
     .finally(res=> {
-      btn.textContent = 'Сохранить'
+      formEditSaveBtn.textContent = 'Сохранить'
   });
 });
 
