@@ -13,5 +13,3 @@ export default class PopupWithImage extends Popup {
     popupPhotoTitle.textContent = title;
   }
 }
-
-export { PopupWithImage };
