@@ -6,7 +6,7 @@ class PopupWithImage extends Popup {
   }
 
   open () {
-    this._popup.classList.add('popup_opened');
+    this.popup.classList.add('popup_opened');
     popupPhotoImg.src = cardLinkValue;
     popupPhotoImg.alt = cardNameValue;
     popupPhotoTitle.textContent = cardNameValue;

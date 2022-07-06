@@ -1,26 +1,26 @@
 class Popup {
   constructor (popupSelector) {
-    this._popup = popupSelector;
+    this.popup = document.querySelector(popupSelector);
   }
 
   open () {
-    this._popup.classList.add('popup_opened');
+    this.popup.classList.add('popup_opened');
   }
 
   close () {
-    this._popup.classList.remove('popup_opened');
+    this.popup.classList.remove('popup_opened');
   }
 
   _handleEscClose (evt) {
     if(evt.key === 'Escape') {
-      this.close(this._popup);
+      this.close(this.popup);
     }
   }
 
   setEventListeners () {
-    this._popup.addEventListener('mousedown', (evt) => {
+    this.popup.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__button-close')) { 
-        this.close(this._popup);
+        this.close(this.popup);
       };
     });
   }
