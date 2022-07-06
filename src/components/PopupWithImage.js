@@ -5,11 +5,12 @@ export default class PopupWithImage extends Popup {
     super(popupSelector);
   }
 
-  open () {
+  open (src, title) {
     this.popup.classList.add('popup_opened');
-    popupPhotoImg.src = cardLinkValue;
-    popupPhotoImg.alt = cardNameValue;
-    popupPhotoTitle.textContent = cardNameValue;
+    openPopup(popupPhoto);
+    popupPhotoImg.src = src;
+    popupPhotoImg.alt = title;
+    popupPhotoTitle.textContent = title;
   }
 }
 
