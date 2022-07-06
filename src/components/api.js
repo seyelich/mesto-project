@@ -1,7 +1,7 @@
 class Api {
   constructor( { baseUrl, headers }) {
-    this.baseUrl = baseUrl;
-    this.headers = headers;
+    this._baseUrl = baseUrl;
+    this._headers = headers;
   }
 
   checkResult(res) {
@@ -12,23 +12,23 @@ class Api {
   }
 
   getProfileInfo() {
-    return fetch(`${this.baseUrl}/users/me`, {
-      headers: this.headers
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers
     })
       .then(res => this.checkResult(res))
   }
   
   getCards() {
-    return fetch(`${this.baseUrl}/cards`, {
-      headers: this.headers
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers
     })
       .then(res => this.checkResult(res))
   }
   
   changeProfile(newProfile) {
-    return fetch(`${this.baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this.headers,
+      headers: this._headers,
       body: JSON.stringify({
         name: newProfile.name,
         about: newProfile.about
@@ -37,9 +37,9 @@ class Api {
   }
   
   postNewCard(newCard) {
-    return fetch(`${this.baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: this.headers,
+      headers: this._headers,
       body: JSON.stringify({
         name: newCard.name,
         link: newCard.link
@@ -48,30 +48,30 @@ class Api {
   }
   
   deleteCard(cardId) {
-    return fetch(`${this.baseUrl}/cards/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: this.headers
+      headers: this._headers
     })
   }
   
   setLike(cardId) {
-    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
-      headers: this.headers
+      headers: this._headers
     })
   }
   
   deleteLike(cardId) {
-    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
-      headers: this.headers
+      headers: this._headers
     })
   }
   
   changeAva(newAvaUrl) {
-    return fetch(`${this.baseUrl}/users/me/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this.headers,
+      headers: this._headers,
       body: JSON.stringify({
         avatar: newAvaUrl.avatar
       })

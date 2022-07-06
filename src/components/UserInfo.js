@@ -4,8 +4,8 @@ import { closePopup } from "./utils";
 
 class UserInfo {
   constructor(userNameSelector, userAboutSelector) {
-    this.userNameSelector = userNameSelector;
-    this.userAboutSelector = userAboutSelector;
+    this._userName = document.querySelector(userNameSelector);
+    this._userAbout = document.querySelector(userAboutSelector);
   }
 
   getUserInfo() {
@@ -13,15 +13,15 @@ class UserInfo {
     return userInfo;
   }
 
-  setUserInfo(userName, userAbout) {
+  setUserInfo(userNameVal, userAboutVal) {
     api.changeProfile({
-      name: userName,
-      about: userAbout
+      name: userNameVal,
+      about: userAboutVal
     })
       .then(res => {
         api.checkResult(res);
-        document.querySelector(this.userNameSelector).textContent = userName;
-        document.querySelector(this.userAboutSelector).textContent = userAbout;
+        this._userName.textContent = userNameVal;
+        this._userAbout.textContent = userAboutVal;
         closePopup(popupEdit);
       })
       .catch(err => console.log(err))
