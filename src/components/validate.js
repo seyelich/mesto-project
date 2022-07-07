@@ -43,9 +43,11 @@ export class FormValidator {
 
   enableValidation () {
     this._form.setAttribute('novalidate', '');
+    FormValidator.toggleSubmitBtn(this._form, this._submitBtn, this._submitBtnInactiveClass);
     this._setListeners();
   }
 }
+
 /*
 function showInputError(formElement, inputElement, errorMessage, obj) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
