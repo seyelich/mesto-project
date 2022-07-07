@@ -6,7 +6,7 @@ export default class PopupWithImage extends Popup {
   }
 
   open (src, title) {
-    this.popup.classList.add('popup_opened');
+    this.popupElement.classList.add('popup_opened');
     openPopup(popupPhoto);
     popupPhotoImg.src = src;
     popupPhotoImg.alt = title;

@@ -3,7 +3,7 @@ import Popup from './Popup';
 export default class PopupWithForm extends Popup {
   constructor(popupSelector, callbackFormSubmit) {
     super(popupSelector);
-    this.formElement = this.popup.querySelector('.form');
+    this.formElement = this.popupElement.querySelector('.form');
     this.callbackFormSubmit = callbackFormSubmit;
   }
 
@@ -24,9 +24,9 @@ export default class PopupWithForm extends Popup {
   } 
 
   setEventListeners() {
-    this.popup.addEventListener('mousedown', (evt) => {
+    this.popupElement.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__button-close')) { 
-        this.close(this.popup);
+        this.close(this.popupElement);
       };
     });
 
@@ -34,7 +34,7 @@ export default class PopupWithForm extends Popup {
   }
 
   close() {
-    this.popup.classList.remove('popup_opened');
+    this.popupElement.classList.remove('popup_opened');
     this.formElement.reset();
   }
 }
