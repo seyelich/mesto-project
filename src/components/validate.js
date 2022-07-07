@@ -31,6 +31,7 @@ export class FormValidator {
   }
 
   static toggleSubmitBtn (form, button, inactiveClass) {
+    console.log(form.checkValidity());
     if (!form.checkValidity()) {
       button.classList.add(inactiveClass);
       button.setAttribute('disabled', '');

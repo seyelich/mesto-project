@@ -63,7 +63,7 @@ formAdd.addEventListener('submit', function(evt) {
     .then(data => {
       addCard(data.name, data.link, data.likes, data.owner._id, data._id);
       closePopup(popupAdd);
-      FormValidator.toggleButtonState(formAdd, btn, obj.inactiveButtonClass);
+      FormValidator.toggleSubmitBtn(formAdd, btn, obj.inactiveButtonClass);
     })
     .catch(err => console.log(err))
     .finally(res => {
