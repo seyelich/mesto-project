@@ -2,7 +2,7 @@ import '../pages/index.css';
 import { popups, popupAdd, popupEdit, editButton, addButton, formAdd, formEdit, obj, editAvaOverlay, popupAva, name, about, profilePic, formAva, inputName, inputAbout, popupAddInputs, inputAva, formCheck, profileName, profileAbout } from './constants';
 import { writeInfoInInput } from './modal';
 import { addCard } from './card';
-import { enableValidation, toggleButtonState } from './validate';
+import { FormValidator } from './validate';
 import { closePopup, openPopup } from './utils';
 import { getProfileInfo, getCards, changeProfile, postNewCard, changeAva, checkResult } from './api';
 
@@ -63,7 +63,7 @@ formAdd.addEventListener('submit', function(evt) {
     .then(data => {
       addCard(data.name, data.link, data.likes, data.owner._id, data._id);
       closePopup(popupAdd);
-      toggleButtonState(popupAddInputs, btn, obj);
+      FormValidator.toggleButtonState(formAdd, btn, obj.inactiveButtonClass);
     })
     .catch(err => console.log(err))
     .finally(res => {
@@ -72,7 +72,11 @@ formAdd.addEventListener('submit', function(evt) {
   formAdd.reset();
 });
 
-enableValidation(obj);
+for (const form of document.forms) {
+  const validator = new FormValidator(obj, form);
+  validator.enableValidation();
+}
+// enableValidation(obj);
 
 Promise.all([getProfileInfo(), getCards()])
   .then(([userData, cards]) => {
