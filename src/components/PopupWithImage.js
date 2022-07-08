@@ -1,4 +1,5 @@
-import Popup from './Popup';
+import { Popup } from './Popup';
+import { popupPhotoImg, popupPhotoTitle } from './constants';
 
 export default class PopupWithImage extends Popup {
   constructor (popupSelector) {
@@ -6,10 +7,12 @@ export default class PopupWithImage extends Popup {
   }
 
   open (src, title) {
+    console.log('blah')
     this.popupElement.classList.add('popup_opened');
-    openPopup(popupPhoto);
     popupPhotoImg.src = src;
     popupPhotoImg.alt = title;
     popupPhotoTitle.textContent = title;
   }
 }
+
+export const popupPhotoCopy = new PopupWithImage('.popup-photo');

@@ -1,6 +1,6 @@
-import Popup from './Popup';
+import { Popup } from './Popup';
 
-export default class PopupWithForm extends Popup {
+class PopupWithForm extends Popup {
   constructor(popupSelector, callbackFormSubmit) {
     super(popupSelector);
     this.formElement = this.popupElement.querySelector('.form');
@@ -38,3 +38,9 @@ export default class PopupWithForm extends Popup {
     this.formElement.reset();
   }
 }
+
+const popupEditCopy = new PopupWithForm('.popup-edit');
+const popupAddCopy = new PopupWithForm('.popup-add');
+const popupAvaCopy = new PopupWithForm('.popup-avatar');
+
+export { popupEditCopy, popupAddCopy, popupAvaCopy };

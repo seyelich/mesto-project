@@ -1,20 +1,20 @@
 import { openPopup } from "./utils";
 import { popupPhoto, cardsContainer, popupPhotoImg, popupPhotoTitle } from "./constants";
-import { deleteCard, deleteLike, setLike, checkResult } from "./api";
+import { api } from "./api";
+import Section from "./Section";
+import { popupPhotoCopy } from './PopupWithImage.js';
 
-// САВ Пока класс можно не экспортировать, карточки формируются функцией в конце файла, чтобы ничего не ломать
-class Card {
-  constructor (cardNameValue, cardLinkValue, cardLikes, userId, cardId, template, handleCardClick) {
-    this._title = cardNameValue;
-    this._src = cardLinkValue;
-    this._likes = cardLikes;
-    this._id = cardId;
-    this._ownerId = userId;
+export class Card {
+  constructor (data, template, handleCardClick) {
+    this._title = data.name;
+    this._src = data.link;
+    this._likes = data.likes;
+    this._id = data._id;
+    this._ownerId = data.owner._id;
     this._template = template;
     this._clickHandler = handleCardClick;
 
-    // САВ Темплат пока не передаётся в объект, поэтому делаем поиск элемента по-старинке
-    this._element = document.querySelector('#card-template').content.cloneNode(true).firstElementChild;
+    this._element = this._template.content.cloneNode(true).firstElementChild;
     this._image = this._element.querySelector('.card__img');
     this._titleElem = this._element.querySelector('.card__title');
     this._deleteButton = this._element.querySelector('.card__delete-button');
@@ -30,7 +30,6 @@ class Card {
     this._image.alt = this._title;
     this._titleElem.textContent = this._title;
     this._likeCounter.textContent = this._likes.length;
-    // САВ Чо-то мне кажется, что удалять кнопку по условию, это как-то странно. Пока оставим так.
     if (!this._isOwned) this._deleteButton.remove();
     if (this._isLiked) this._likeButton.classList.add('card__like-button_active');
   }
@@ -38,8 +37,8 @@ class Card {
   // САВ Возможно, стоит подумать над полным рефакторингом этого метода
   _likeButtonListener () {
     if (this._isLiked) {
-      deleteLike(this._id)
-        .then(res => checkResult(res)) // САВ Я бы проверял ответ сервака в апи, а не в обработчике события
+      api.deleteLike(this._id)
+        .then(res => api.checkResult(res)) // САВ Я бы проверял ответ сервака в апи, а не в обработчике события
         .then((data) => {
           this._likeCounter.textContent = data.likes.length;
           this._likeButton.classList.remove('card__like-button_active');
@@ -50,8 +49,8 @@ class Card {
       );
     }
     else { 
-      setLike(this._id)
-        .then((res) => checkResult(res))
+      api.setLike(this._id)
+        .then((res) => api.checkResult(res))
         .then((data) => {
           this._likeCounter.textContent = data.likes.length;
           this._likeButton.classList.add('card__like-button_active');
@@ -64,9 +63,9 @@ class Card {
   }
 
   _deleteButtonListener () {
-    deleteCard(this._id)
+    api.deleteCard(this._id)
       .then(res => {
-        checkResult(res);
+        api.checkResult(res);
         this._element.remove()
       })
       .catch(err => 
@@ -76,7 +75,8 @@ class Card {
  
   // САВ Пока плейсхолдер, потому что я не знаю, как там будут работать попапы
   _imageListener () {
-    this._clickHandler(this._src, this._title);
+    console.log(this);
+    this._clickHandler.bind(popupPhotoCopy)(this._src, this._title);
   }
   
   // САВ Надо обсудить использование бинда, будет ли это проблемой
@@ -174,8 +174,8 @@ function setPopupPhoto(src, title) {
   popupPhotoTitle.textContent = title;
 }
 
-export function addCard(cardNameValue, cardLinkValue, cardLikes, userId, cardId) {
-  const card = new Card(cardNameValue, cardLinkValue, cardLikes, userId, cardId, 'здесь будет передаваться селектор темплата', setPopupPhoto);
+export function addCard(cardNameValue, cardLinkValue, cardLikes, userId, cardId, template) {
+  const card = new Card(cardNameValue, cardLinkValue, cardLikes, userId, cardId, template, setPopupPhoto);
   const cardEl = card.element;
   cardsContainer.prepend(cardEl);
 }
