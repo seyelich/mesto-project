@@ -1,5 +1,3 @@
-import { obj } from "./constants";
-
 export class FormValidator {
   constructor (param, form) {
     this._form = form;
