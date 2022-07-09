@@ -1,6 +1,6 @@
-import { api } from "./api";
-import { popupEdit, formEditSaveBtn } from "./constants";
-import { closePopup } from "./utils";
+import { api } from "./Api";
+import { formEditSaveBtn } from "./constants";
+import { popupEditCopy } from "./PopupWithForm";
 
 class UserInfo {
   constructor(userNameSelector, userAboutSelector) {
@@ -22,7 +22,7 @@ class UserInfo {
         api.checkResult(res);
         this._userName.textContent = userNameVal;
         this._userAbout.textContent = userAboutVal;
-        closePopup(popupEdit);
+        popupEditCopy.close();
       })
       .catch(err => console.log(err))
       .finally(() => {

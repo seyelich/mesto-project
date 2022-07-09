@@ -1,3 +1,5 @@
+import { obj } from './constants';
+
 export class FormValidator {
   constructor (param, form) {
     this._form = form;
@@ -7,8 +9,11 @@ export class FormValidator {
     this._errorMsgClass = param.errorClass;
   }
 
+  static _inputErrorClass = obj.inputErrorClass;
+  static _errorMsgClass = obj.errorClass;
+
   _setListeners () {
-    this._form.addEventListener('input', this._validateForm.bind(this))
+    this._form.addEventListener('input', this._validateForm.bind(this));
   }
 
   _validateForm (evt) {
@@ -25,6 +30,13 @@ export class FormValidator {
     } else {
       input.classList.add(this._inputErrorClass);
       msgSpan.classList.add(this._errorMsgClass);
+    }
+  }
+
+  static resetValidation (form) {
+    for (const element of form.children) {
+      element.classList.remove(FormValidator._inputErrorClass);
+      element.classList.remove(FormValidator._errorMsgClass);
     }
   }
 

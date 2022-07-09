@@ -1,10 +1,16 @@
 import { Popup } from './Popup';
+import { formEditSubmitHandler, formAddSubmitHandler, formAvaSubmitHandler } from './modal';
 
 class PopupWithForm extends Popup {
   constructor(popupSelector, callbackFormSubmit) {
     super(popupSelector);
-    this.formElement = this.popupElement.querySelector('.form');
-    this.callbackFormSubmit = callbackFormSubmit;
+    this._formElement = this.popupElement.querySelector('.form');
+    this._callbackFormSubmit = callbackFormSubmit;
+  }
+
+  open() {
+    super.open();
+    this.setEventListeners();
   }
 
   _getInputValues() {
@@ -24,13 +30,8 @@ class PopupWithForm extends Popup {
   } 
 
   setEventListeners() {
-    this.popupElement.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__button-close')) { 
-        this.close(this.popupElement);
-      };
-    });
-
-    this.formElement.addEventListener('submit', this.callbackFormSubmit);
+    super.setEventListeners();
+    this.formElement.addEventListener('submit', this._callbackFormSubmit);
   }
 
   close() {
@@ -39,8 +40,8 @@ class PopupWithForm extends Popup {
   }
 }
 
-const popupEditCopy = new PopupWithForm('.popup-edit');
-const popupAddCopy = new PopupWithForm('.popup-add');
-const popupAvaCopy = new PopupWithForm('.popup-avatar');
+const popupEditCopy = new PopupWithForm('.popup-edit', formEditSubmitHandler);
+const popupAddCopy = new PopupWithForm('.popup-add', formAddSubmitHandler);
+const popupAvaCopy = new PopupWithForm('.popup-avatar', formAvaSubmitHandler);
 
 export { popupEditCopy, popupAddCopy, popupAvaCopy };

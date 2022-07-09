@@ -23,7 +23,5 @@ export class Popup {
         this.close(this.popupElement);
       };
     });
-
-    
   }
 }
