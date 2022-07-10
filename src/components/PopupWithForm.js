@@ -1,11 +1,13 @@
 import { Popup } from './Popup';
 import { formEditSubmitHandler, formAddSubmitHandler, formAvaSubmitHandler } from './modal';
+import { obj } from "./constants";
 
 class PopupWithForm extends Popup {
   constructor(popupSelector, callbackFormSubmit) {
     super(popupSelector);
-    this._formElement = this.popupElement.querySelector('.form');
+    this._formElement = this._popupElement.querySelector('.form');
     this._callbackFormSubmit = callbackFormSubmit;
+    this._inputList = this._formElement.querySelectorAll(obj.inputSelector);
   }
 
   open() {
@@ -14,29 +16,27 @@ class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    // достаём все элементы полей
-    this._inputList = this._formElement.querySelectorAll('.form__input');
-  
-    // создаём пустой объект
     this._formValues = {};
-  
-    // добавляем в этот объект значения всех полей
+
     this._inputList.forEach(input => {
       this._formValues[input.name] = input.value;
     });
-  
-    // возвращаем объект значений
+
     return this._formValues;
   } 
 
   setEventListeners() {
     super.setEventListeners();
-    this.formElement.addEventListener('submit', this._callbackFormSubmit);
+    this._formElement.addEventListener('submit', this._callbackFormSubmit);
   }
 
   close() {
-    this.popupElement.classList.remove('popup_opened');
-    this.formElement.reset();
+    super.close();
+    this._formElement.reset();
+    this._inputList.forEach(input => {
+      input.classList.remove(obj.inputErrorClass);
+      this._formElement.querySelector(`.${input.name}-error`).classList.remove(obj.errorClass);
+    })
   }
 }
 

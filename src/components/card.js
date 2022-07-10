@@ -74,7 +74,6 @@ export class Card {
   }
 
   _imageListener () {
-    console.log(this);
     this._clickHandler(this._src, this._title);
   }
 
