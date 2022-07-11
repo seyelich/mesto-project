@@ -8,8 +8,9 @@ export default class PopupWithImage extends Popup {
   }
 
   open (src, title) {
-    super.setEventListeners();// САВ Это я пока добавил, чтобы закрывалось нормально, сам посмотришь как лучше.
-    this._popupElement.classList.add('popup_opened');
+    // super.setEventListeners();// САВ Это я пока добавил, чтобы закрывалось нормально, сам посмотришь как лучше.
+    // this._popupElement.classList.add('popup_opened');
+    super.open();
     popupPhotoImg.src = src;
     popupPhotoImg.alt = title;
     popupPhotoTitle.textContent = title;
