@@ -10,11 +10,6 @@ class PopupWithForm extends Popup {
     this._inputList = this._formElement.querySelectorAll(obj.inputSelector);
   }
 
-  open() {
-    super.open();
-    // this.setEventListener();
-  }
-
   _getInputValues() {
     this._formValues = {};
 
