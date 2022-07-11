@@ -1,7 +1,6 @@
-import { profileName, profileAbout, inputAbout, inputName, formEditSaveBtn, cardTemplate, obj, profilePic, inputAva } from './constants';
+import { profileName, profileAbout, inputAbout, inputName, formEditSaveBtn, cardTemplate, profilePic, inputAva } from './constants';
 import { userInfo } from './UserInfo';
 import { api } from './Api';
-import { FormValidator } from './FormValidator';
 import { popupAddCopy, popupAvaCopy } from './PopupWithForm';
 import { Card } from './Card';
 import { popupPhotoCopy } from './PopupWithImage';
@@ -34,7 +33,6 @@ export function formAddSubmitHandler(evt) {
       const cardEl = card.element;
       cardList.addItem(cardEl, true)
       popupAddCopy.close();
-      FormValidator.toggleSubmitBtn(evt.currentTarget, btn, obj.inactiveButtonClass);
     })
     .catch(err => console.log(err))
     .finally(() => {

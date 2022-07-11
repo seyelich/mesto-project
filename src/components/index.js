@@ -13,18 +13,15 @@ export let myId;
 
 addButton.addEventListener('click', () => {
   popupAddCopy.open();
-  popupAddCopy.setEventListeners();
 });
 
 editButton.addEventListener('click', () => {
   popupEditCopy.open();
-  popupEditCopy.setEventListeners();
   writeInfoInInput();
 });
 
 editAvaOverlay.addEventListener('click', () => {
   popupAvaCopy.open();
-  popupAvaCopy.setEventListeners();
 })
 
 for (const form of document.forms) {

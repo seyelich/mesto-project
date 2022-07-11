@@ -1,5 +1,3 @@
-import { obj } from './constants';
-
 export class FormValidator {
   constructor (param, form) {
     this._form = form;
@@ -9,9 +7,6 @@ export class FormValidator {
     this._errorMsgClass = param.errorClass;
   }
 
-  static _inputErrorClass = obj.inputErrorClass; //зачем это делать, если у нас param = obj при создании класса?
-  static _errorMsgClass = obj.errorClass;
-
   _setListeners () {
     this._form.addEventListener('input', this._validateForm.bind(this));
   }
@@ -19,7 +14,7 @@ export class FormValidator {
   _validateForm (evt) {
     const msgSpan = this._form.querySelector(`.${evt.target.name}-error`);
     this._validateInput(evt.target, msgSpan);
-    FormValidator.toggleSubmitBtn(this._form, this._submitBtn, this._submitBtnInactiveClass); //FormValidator -> this?
+    this._toggleSubmitBtn();
   }
 
   _validateInput (input, msgSpan) {
@@ -33,26 +28,19 @@ export class FormValidator {
     }
   }
 
-  // static resetValidation (form) {
-  //   for (const element of form.children) {
-  //     element.classList.remove(FormValidator._inputErrorClass);
-  //     element.classList.remove(FormValidator._errorMsgClass);
-  //   }
-  // }
-
-  static toggleSubmitBtn (form, button, inactiveClass) {
-    if (!form.checkValidity()) {
-      button.classList.add(inactiveClass);
-      button.setAttribute('disabled', '');
+  _toggleSubmitBtn () {
+    if (!this._form.checkValidity()) {
+      this._submitBtn.classList.add(this._submitBtnInactiveClass);
+      this._submitBtn.setAttribute('disabled', '');
     } else {
-      button.classList.remove(inactiveClass);
-      button.removeAttribute('disabled');
+      this._submitBtn.classList.remove(this._submitBtnInactiveClass);
+      this._submitBtn.removeAttribute('disabled');
     }
   }
 
   enableValidation () {
     this._form.setAttribute('novalidate', '');
-    FormValidator.toggleSubmitBtn(this._form, this._submitBtn, this._submitBtnInactiveClass);
+    this._toggleSubmitBtn();
     this._setListeners();
   }
 }

@@ -5,9 +5,10 @@ import { obj } from "./constants";
 class PopupWithForm extends Popup {
   constructor(popupSelector, callbackFormSubmit) {
     super(popupSelector);
-    this._formElement = this._popupElement.querySelector('.form');
-    this._callbackFormSubmit = callbackFormSubmit;
+    this._formElement = this._popupElement.querySelector(obj.formSelector);
+    this._formSubmitBtn = this._popupElement.querySelector(obj.submitButtonSelector);
     this._inputList = this._formElement.querySelectorAll(obj.inputSelector);
+    this._callbackFormSubmit = callbackFormSubmit;
   }
 
   _getInputValues() {
@@ -20,13 +21,15 @@ class PopupWithForm extends Popup {
     return this._formValues;
   } 
 
-  setEventListeners() {
-    super.setEventListeners();
+  _setEventListeners() {
+    super._setEventListeners();
     this._formElement.addEventListener('submit', this._callbackFormSubmit);
   }
 
   close() {
     super.close();
+    this._formSubmitBtn.setAttribute('disabled', '');
+    this._formSubmitBtn.classList.add(obj.inactiveButtonClass);
     this._formElement.reset();
     this._inputList.forEach(input => {
       input.classList.remove(obj.inputErrorClass);
