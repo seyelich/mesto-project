@@ -38,7 +38,6 @@ export class Card {
   _likeButtonListener () {
     if (this._isLiked) {
       api.deleteLike(this._id)
-        .then(res => api.checkResult(res))
         .then((data) => {
           this._likeCounter.textContent = data.likes.length;
           this._likeButton.classList.remove('card__like-button_active');
@@ -50,7 +49,6 @@ export class Card {
     }
     else { 
       api.setLike(this._id)
-        .then((res) => api.checkResult(res))
         .then((data) => {
           this._likeCounter.textContent = data.likes.length;
           this._likeButton.classList.add('card__like-button_active');
@@ -65,7 +63,6 @@ export class Card {
   _deleteButtonListener () {
     api.deleteCard(this._id)
       .then(res => {
-        api.checkResult(res);
         this._element.remove()
       })
       .catch(err => 

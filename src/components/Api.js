@@ -33,7 +33,7 @@ class Api {
         name: newProfile.name,
         about: newProfile.about
       })
-    })
+    }).then(res => this.checkResult(res))
   }
   
   postNewCard(newCard) {
@@ -44,28 +44,28 @@ class Api {
         name: newCard.name,
         link: newCard.link
       })
-    })
+    }).then(res => this.checkResult(res))
   }
   
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
-    })
+    }).then(res => this.checkResult(res))
   }
   
   setLike(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this._headers
-    })
+    }).then(res => this.checkResult(res))
   }
   
   deleteLike(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
-    })
+    }).then(res => this.checkResult(res))
   }
   
   changeAva(newAvaUrl) {
@@ -75,7 +75,7 @@ class Api {
       body: JSON.stringify({
         avatar: newAvaUrl.avatar
       })
-    })
+    }).then(res => this.checkResult(res))
   }
 }
 

@@ -19,7 +19,6 @@ class UserInfo {
       about: userAboutVal
     })
       .then(res => {
-        api.checkResult(res);
         this._userName.textContent = userNameVal;
         this._userAbout.textContent = userAboutVal;
         popupEditCopy.close();

@@ -27,7 +27,6 @@ export function formAddSubmitHandler(evt) {
     name: title.value,
     link: link.value
   })
-    .then(res => api.checkResult(res))
     .then(data => {
       const card = new Card(data, cardTemplate, popupPhotoCopy.open);
       const cardEl = card.element;
@@ -48,7 +47,6 @@ export function formAvaSubmitHandler(evt) {
   const { avatar } = evt.currentTarget.elements;
   api.changeAva({avatar: avatar.value})
     .then(res => {
-      api.checkResult(res);
       profilePic.src = inputAva.value;
       popupAvaCopy.close();
     })
