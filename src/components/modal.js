@@ -1,10 +1,8 @@
-import { formEditSaveBtn, cardTemplate, inputAva } from './constants';
+import { formEditSaveBtn, inputAva } from './constants';
 import { userInfo } from './UserInfo';
 import { api } from './Api';
 import { popupAddCopy, popupAvaCopy, popupEditCopy } from './PopupWithForm';
-import { Card } from './Card';
-import { popupPhotoCopy } from './PopupWithImage';
-import { cardList } from '.';
+import { cardList, newCard } from '.';
 
 export function formEditSubmitHandler(evt) {
   evt.preventDefault();
@@ -34,9 +32,7 @@ export function formAddSubmitHandler(evt) {
     link: link.value
   })
     .then(data => {
-      const card = new Card(data, cardTemplate, popupPhotoCopy.open);
-      const cardEl = card.element;
-      cardList.addItem(cardEl, true)
+      cardList.addItem(newCard(data), true);
       popupAddCopy.close();
     })
     .catch(err => console.log(err))

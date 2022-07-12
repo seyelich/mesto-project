@@ -54,20 +54,14 @@ class Api {
     }).then(res => this.checkResult(res))
   }
   
-  setLike(cardId) {
+  like(cardId, like) {
+    const method = like ? 'PUT' : 'DELETE';
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'PUT',
+      method: method,
       headers: this._headers
     }).then(res => this.checkResult(res))
   }
-  
-  deleteLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'DELETE',
-      headers: this._headers
-    }).then(res => this.checkResult(res))
-  }
-  
+
   changeAva(newAvaUrl) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
