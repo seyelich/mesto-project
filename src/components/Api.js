@@ -54,7 +54,7 @@ class Api {
     }).then(res => this.checkResult(res))
   }
   
-  like(cardId, like) {
+  likeCard(cardId, like) {
     const method = like ? 'PUT' : 'DELETE';
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: method,

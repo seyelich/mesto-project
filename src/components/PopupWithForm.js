@@ -1,8 +1,7 @@
 import { Popup } from './Popup';
-import { formEditSubmitHandler, formAddSubmitHandler, formAvaSubmitHandler } from './modal';
 import { obj } from "./constants";
 
-class PopupWithForm extends Popup {
+export class PopupWithForm extends Popup {
   constructor(popupSelector, callbackFormSubmit) {
     super(popupSelector);
     this._formElement = this._popupElement.querySelector(obj.formSelector);
@@ -37,9 +36,3 @@ class PopupWithForm extends Popup {
     })
   }
 }
-
-const popupEditCopy = new PopupWithForm('.popup-edit', formEditSubmitHandler);
-const popupAddCopy = new PopupWithForm('.popup-add', formAddSubmitHandler);
-const popupAvaCopy = new PopupWithForm('.popup-avatar', formAvaSubmitHandler);
-
-export { popupEditCopy, popupAddCopy, popupAvaCopy };

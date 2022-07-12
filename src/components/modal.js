@@ -1,7 +1,7 @@
 import { formEditSaveBtn, inputAva } from './constants';
 import { userInfo } from './UserInfo';
 import { api } from './Api';
-import { popupAddCopy, popupAvaCopy, popupEditCopy } from './PopupWithForm';
+import { popupAddCopy, popupAvaCopy, popupEditCopy } from '.';
 import { cardList, newCard } from '.';
 
 export function formEditSubmitHandler(evt) {
