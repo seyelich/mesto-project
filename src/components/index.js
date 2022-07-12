@@ -11,6 +11,25 @@ import Section from './Section';
 export let cardList;
 export let myId;
 
+export function newCard (data) {
+  const card = new Card(
+    data, 
+    cardTemplate, 
+    popupPhotoCopy.open, 
+    function () {
+      api.like(card.id, !card.isLiked)
+        .then((data) => card.processLikes(data.likes))
+        .catch(err => console.log(`Ошибка лайка карточки: ${err}`));
+    },
+    function () {
+      api.deleteCard(card.id)
+        .then(() => card.delete())
+        .catch((err) => console.log(`Ошибка удаления карточки: ${err}`));
+    }
+  );
+  return card.element;
+}
+
 addButton.addEventListener('click', () => {
   popupAddCopy.open();
 });
@@ -36,11 +55,9 @@ Promise.all([api.getProfileInfo(), api.getCards()])
     cardList = new Section({
       items: cards, 
       renderer: (item) => {
-          const card = new Card(item, cardTemplate, popupPhotoCopy.open);
-          const cardEl = card.element;
-          cardList.addItem(cardEl, false)
-        }
-      }, '.cards');
+        cardList.addItem(newCard(item), false)
+      }
+    }, '.cards');
     cardList.renderItems();
   })
   .catch(err => {

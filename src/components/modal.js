@@ -2,9 +2,7 @@ import { profileName, profileAbout, inputAbout, inputName, formEditSaveBtn, card
 import { userInfo } from './UserInfo';
 import { api } from './Api';
 import { popupAddCopy, popupAvaCopy } from './PopupWithForm';
-import { Card } from './Card';
-import { popupPhotoCopy } from './PopupWithImage';
-import { cardList } from '.';
+import { cardList, newCard } from '.';
 
 export function writeInfoInInput() {
   inputName.value = profileName.textContent;
@@ -28,9 +26,7 @@ export function formAddSubmitHandler(evt) {
     link: link.value
   })
     .then(data => {
-      const card = new Card(data, cardTemplate, popupPhotoCopy.open);
-      const cardEl = card.element;
-      cardList.addItem(cardEl, true)
+      cardList.addItem(newCard(data), true);
       popupAddCopy.close();
     })
     .catch(err => console.log(err))
