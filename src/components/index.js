@@ -1,12 +1,12 @@
 import '../pages/index.css';
-import { editButton, addButton, obj, editAvaOverlay, profilePic, profileName, profileAbout, cardTemplate } from './constants';
-import { writeInfoInInput } from './modal';
+import { editButton, addButton, obj, editAvaOverlay, cardTemplate, inputAbout, inputName } from './constants';
 import { Card } from './Card';
 import { FormValidator } from './FormValidator';
 import { api } from './Api';
 import { popupEditCopy, popupAddCopy, popupAvaCopy } from './PopupWithForm';
 import { popupPhotoCopy } from './PopupWithImage';
 import Section from './Section';
+import { userInfo } from './UserInfo';
 
 export let cardList;
 export let myId;
@@ -17,7 +17,8 @@ addButton.addEventListener('click', () => {
 
 editButton.addEventListener('click', () => {
   popupEditCopy.open();
-  writeInfoInInput();
+  inputName.value = userInfo.getUserInfo().name;
+  inputAbout.value = userInfo.getUserInfo().about;
 });
 
 editAvaOverlay.addEventListener('click', () => {
@@ -31,7 +32,8 @@ for (const form of document.forms) {
 
 Promise.all([api.getProfileInfo(), api.getCards()])
   .then(([userData, cards]) => {
-    renderProfile(userData);
+    userInfo.setUserInfo(userData.name, userData.about);
+    userInfo.setUserAvatar(userData.avatar);
     myId = userData._id;
     cardList = new Section({
       items: cards, 
@@ -47,9 +49,3 @@ Promise.all([api.getProfileInfo(), api.getCards()])
     console.log(err)
 });
 
-//Можно ли заменить на какой-либо метод класса?
-function renderProfile(data) {
-  profileName.textContent = data.name;
-  profileAbout.textContent = data.about;
-  profilePic.src = data.avatar;
-}

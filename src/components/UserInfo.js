@@ -1,33 +1,28 @@
-import { api } from "./Api";
-import { formEditSaveBtn } from "./constants";
-import { popupEditCopy } from "./PopupWithForm";
+import { profileAbout, profileName } from "./constants";
 
 class UserInfo {
-  constructor(userNameSelector, userAboutSelector) {
+  constructor(userNameSelector, userAboutSelector,userAvaSelector) {
     this._userName = document.querySelector(userNameSelector);
     this._userAbout = document.querySelector(userAboutSelector);
+    this._userAva = document.querySelector(userAvaSelector)
   }
 
   getUserInfo() {
-    const userInfo = api.getProfileInfo().then(res => {return res});
+    const userInfo = {
+      name: profileName.textContent,
+      about: profileAbout.textContent
+    }
     return userInfo;
   }
 
   setUserInfo(userNameVal, userAboutVal) {
-    api.changeProfile({
-      name: userNameVal,
-      about: userAboutVal
-    })
-      .then(res => {
-        this._userName.textContent = userNameVal;
-        this._userAbout.textContent = userAboutVal;
-        popupEditCopy.close();
-      })
-      .catch(err => console.log(err))
-      .finally(() => {
-        formEditSaveBtn.textContent = 'Сохранить'
-    });
+    this._userName.textContent = userNameVal;
+    this._userAbout.textContent = userAboutVal;
+  }
+
+  setUserAvatar(userAvaUrl) {
+    this._userAva.src = userAvaUrl;
   }
 }
 
-export const userInfo = new UserInfo('.profile__name', '.profile__description');
+export const userInfo = new UserInfo('.profile__name', '.profile__description', '.profile__img');
