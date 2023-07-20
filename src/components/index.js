@@ -1,119 +1,75 @@
 import '../pages/index.css';
-import { popups, popupAdd, popupEdit, editButton, addButton, formAdd, formEdit, obj, editAvaOverlay, popupAva, name, about, profilePic, formAva, inputName, inputAbout, popupAddInputs, inputAva, formCheck, profileName, profileAbout } from './constants';
-import { writeInfoInInput } from './modal';
-import { addCard } from './card';
-import { enableValidation, toggleButtonState } from './validate';
-import { closePopup, openPopup } from './utils';
-import { getProfileInfo, getCards, changeProfile, postNewCard, changeAva, checkResult } from './api';
+import { editButton, addButton, obj, editAvaOverlay, cardTemplate, inputAbout, inputName, formAdd, formEdit, formAva } from './constants';
+import { formEditSubmitHandler, formAddSubmitHandler, formAvaSubmitHandler } from './modal';
+import { Card } from './Card';
+import { FormValidator } from './FormValidator';
+import { api } from './Api';
+import { PopupWithForm } from './PopupWithForm';
+import { PopupWithImage } from './PopupWithImage';
+import Section from './Section';
+import { userInfo } from './UserInfo';
 
-addButton.addEventListener('click', () => { openPopup(popupAdd) });
+export let cardList;
+export let myId;
 
-popups.forEach((popup) => { 
-  popup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_opened')) { 
-        closePopup(popup);
-      };
+export const popupEditCopy = new PopupWithForm('.popup-edit', formEditSubmitHandler);
+export const popupAddCopy = new PopupWithForm('.popup-add', formAddSubmitHandler);
+export const popupAvaCopy = new PopupWithForm('.popup-avatar', formAvaSubmitHandler);
+export const popupPhotoCopy = new PopupWithImage('.popup-photo');
+const editFormValidator = new FormValidator(obj, formEdit);
+const addFormValidator = new FormValidator(obj, formAdd);
+const avaFormValidator = new FormValidator(obj, formAva);
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
+avaFormValidator.enableValidation();
 
-      if (evt.target.classList.contains('popup__button-close')) { 
-        closePopup(popup);
-      }
-  });
+export function newCard (data) {
+  const card = new Card(
+    data, 
+    cardTemplate, 
+    popupPhotoCopy.open, 
+    function () {
+      api.likeCard(card.id, !card.isLiked)
+        .then((data) => card.processLikes(data.likes))
+        .catch(err => console.log(`Ошибка лайка карточки: ${err}`));
+    },
+    function () {
+      api.deleteCard(card.id)
+        .then(() => card.delete())
+        .catch((err) => console.log(`Ошибка удаления карточки: ${err}`));
+    }
+  );
+  return card.element;
+}
+
+addButton.addEventListener('click', () => {
+  popupAddCopy.open();
 });
 
 editButton.addEventListener('click', () => {
-  openPopup(popupEdit);
-  writeInfoInInput();
+  popupEditCopy.open();
+  inputName.value = userInfo.getUserInfo().name;
+  inputAbout.value = userInfo.getUserInfo().about;
 });
 
 editAvaOverlay.addEventListener('click', () => {
-  openPopup(popupAva)
+  popupAvaCopy.open();
 })
 
-formEdit.addEventListener('submit', function(evt) {
-  evt.preventDefault();
-  const btn = formEdit.querySelector('.form__button-save');
-  btn.textContent = 'Сохранение...';
-  const { name, about } = evt.currentTarget.elements;
-  changeProfile({
-    name: name.value,
-    about: about.value
-  })
-    .then(res => {
-      checkResult(res);
-      profileName.textContent = inputName.value;
-      profileAbout.textContent = inputAbout.value;
-      closePopup(popupEdit);
-    })
-    .catch(err => console.log(err))
-    .finally(res=> {
-      btn.textContent = 'Сохранить'
-  });
-});
-
-formAdd.addEventListener('submit', function(evt) {
-  evt.preventDefault();
-  const btn = formAdd.querySelector('.form__button-save');
-  btn.textContent = 'Сохранение...';
-  const { title, link } = evt.currentTarget.elements;
-  postNewCard({
-    name: title.value,
-    link: link.value
-  })
-    .then(res => checkResult(res))
-    .then(data => {
-      addCard(data.name, data.link, data.likes, data.owner._id, data._id);
-      closePopup(popupAdd);
-      toggleButtonState(popupAddInputs, btn, obj);
-    })
-    .catch(err => console.log(err))
-    .finally(res => {
-      btn.textContent = 'Создать'
-  });
-  formAdd.reset();
-});
-
-enableValidation(obj);
-
-Promise.all([getProfileInfo(), getCards()])
+Promise.all([api.getProfileInfo(), api.getCards()])
   .then(([userData, cards]) => {
-    renderProfile(userData);
-    renderCards(cards);
+    userInfo.setUserInfo(userData.name, userData.about);
+    userInfo.setUserAvatar(userData.avatar);
+    myId = userData._id;
+    cardList = new Section({
+      items: cards, 
+      renderer: (item) => {
+        cardList.addItem(newCard(item), false)
+      }
+    }, '.cards');
+    cardList.renderItems();
   })
   .catch(err => {
     console.log(err)
 });
 
-function renderProfile(data) {
-  profileName.textContent = data.name;
-  profileAbout.textContent = data.about;
-  profilePic.src = data.avatar;
-}
-
-function renderCards(data) {
-  data.reverse().forEach((i) => {
-    addCard(i.name, i.link, i.likes, i.owner._id, i._id);
-  });
-}
-
-formAva.addEventListener('submit', function(evt) {
-  evt.preventDefault();
-  const btn = formAva.querySelector('.form__button-save');
-  btn.textContent = 'Сохранение...';
-  const { avatar } = evt.currentTarget.elements;
-  changeAva({avatar: avatar.value})
-    .then(res => {
-      checkResult(res);
-      profilePic.src = inputAva.value;
-      closePopup(popupAva);
-    })
-    .catch(err => console.log(err))
-    .finally(res => {
-      btn.textContent = 'Сохранить'
-  });
-})
-
-// formCheck.addEventListener('submit', function(evt) {
-//   evt.preventDefault();
-//   const btn = formAva.querySelector('.form__button-save');
-//   const card = evt.
-// })
